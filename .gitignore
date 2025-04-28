@@ -1,0 +1,7 @@
+.env
+*__pycache__
+nginx.conf
+package-lock.json
+dist
+
+/venv
