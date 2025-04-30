@@ -61,7 +61,7 @@ run: generate-nginx
 	@echo "nginx started successfully."
 	@bash -c ' \
 		trap "echo Stopping nginx...; sudo nginx -s stop; kill 0" SIGINT; \
-		$(UVICORN) src.app:app --host 0.0.0.0 --port $(PORT_BACK) & \
+		$(UVICORN) src.app:app --host 0.0.0.0 --port $(PORT_BACK) --reload & \
 		cd front && npm run dev -- --port $(PORT_FRONT) & \
 		echo "You can access the application at http://localhost:$(PORT)"; \
 		echo "Press Ctrl+C to stop the servers..."; \

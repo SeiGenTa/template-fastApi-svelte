@@ -2,14 +2,18 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-app = FastAPI()
+from src.api.user import userApi
 
-@app.post("/api/v1/user/register")
-async def register_user():
-    return {"message": "User registered successfully"}
+app = FastAPI(
+    docs_url="/api/docs",
+    openapi_url="/api/openapi.json",
+)
 
-app.mount("/assets", StaticFiles(directory="dist/assets"), name="assets")
+
+app.include_router(userApi, prefix="/api/v1/user", tags=["user"])
 
 @app.get("/")
 async def read_root():
     return FileResponse("dist/index.html")
+
+app.mount("/assets", StaticFiles(directory="dist/assets"), name="assets")
